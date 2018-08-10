@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.9)
 project(math)
 
-option(tests "tests" ON)
+option(TESTS "Turn Tests On/Off" ON)
 
 set(CMAKE_CXX_STANDARD 11)
 
@@ -14,7 +14,7 @@ set(SOURCES
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-if (tests MATCHES ON)
+if (TESTS MATCHES ON)
     include(CTest)
     add_subdirectory(tests)
 endif ()

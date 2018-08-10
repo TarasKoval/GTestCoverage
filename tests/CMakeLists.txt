@@ -17,8 +17,8 @@ target_link_libraries(math_test
 # Tell ctest about my tests
 include(GoogleTest)
 gtest_add_tests(
-        TARGET math_test
-        TEST_LIST myTests_targets
+        TARGET math
+        TEST_LIST math_test
 )
 
 # set each target to timeout if not finished within 10 sec
