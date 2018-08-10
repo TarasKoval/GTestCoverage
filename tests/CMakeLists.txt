@@ -1,4 +1,4 @@
-option(CodeCoverage "CodeCoverage" OFF)
+option(CodeCoverage "CodeCoverage" ON)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/tests/cmake/modules/)
 
 # Configure google-test as a downloadable library.
