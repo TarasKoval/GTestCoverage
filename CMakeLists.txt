@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.5.1)
 project(math)
 
+option(tests "tests" OFF)
+
 set(CMAKE_CXX_STANDARD 11)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
@@ -12,4 +14,7 @@ set(SOURCES
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-add_subdirectory(tests)
+if (tests MATCHES ON)
+    include(CTest)
+    add_subdirectory(tests)
+endif ()
