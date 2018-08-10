@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.9)
 project(math)
 
-option(tests "tests" OFF)
+option(tests "tests" ON)
 
 set(CMAKE_CXX_STANDARD 11)
 

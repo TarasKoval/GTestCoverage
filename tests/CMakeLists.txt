@@ -1,24 +1,28 @@
-option(CodeCoverage "CodeCoverage" ON)
+option(CodeCoverage "CodeCoverage" OFF)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/tests/cmake/modules/)
 
-include(DownloadProject.cmake)
-download_project(PROJ googletest
-        GIT_REPOSITORY https://github.com/google/googletest.git
-        GIT_TAG master
-        UPDATE_DISCONNECTED 1
+# Configure google-test as a downloadable library.
+include(External_GTest.cmake)
+
+
+add_executable(math_test
+        ${PROJECT_SOURCE_DIR}/tests/src/math_test.cpp
+        ${PROJECT_SOURCE_DIR}/src/functions.cpp
         )
 
-include_directories(${GTEST_INCLUDE_DIR})
+target_link_libraries(math_test
+        gtest gtest_main
+        )
 
-# Prevent GoogleTest from overriding our compiler/linker options
-# when building with Visual Studio
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+# Tell ctest about my tests
+include(GoogleTest)
+gtest_add_tests(
+        TARGET math_test
+        TEST_LIST myTests_targets
+)
 
-add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
-
-# Trivial example using gtest and gmock
-add_executable(math_test ${PROJECT_SOURCE_DIR}/tests/src/math_test.cpp ${PROJECT_SOURCE_DIR}/src/functions.cpp)
-target_link_libraries(math_test gtest gtest_main)
+# set each target to timeout if not finished within 10 sec
+set_tests_properties(${myTests_targets} PROPERTIES TIMEOUT 10)
 
 if (CodeCoverage MATCHES ON)
     set(CMAKE_CXX_FLAGS "-O0 -g -fprofile-arcs -ftest-coverage ")
